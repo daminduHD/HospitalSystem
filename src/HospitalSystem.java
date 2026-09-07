@@ -50,3 +50,26 @@ class VisitHistoryList {
         return sb.toString();
     }
 }
+
+class PatientBST {
+    Patient root;
+
+    public void insert(Patient p) { root = insertRec(root, p); }
+    
+    private Patient insertRec(Patient currentRoot, Patient p) {
+        if (currentRoot == null) return p;
+        if (p.patientID < currentRoot.patientID) currentRoot.left = insertRec(currentRoot.left, p);
+        else if (p.patientID > currentRoot.patientID) currentRoot.right = insertRec(currentRoot.right, p);
+        return currentRoot;
+    }
+
+    public void getInOrder(StringBuilder sb) { inOrderRec(root, sb); }
+    
+    private void inOrderRec(Patient currentRoot, StringBuilder sb) {
+        if (currentRoot != null) {
+            inOrderRec(currentRoot.left, sb);
+            sb.append(String.format(" [ID: %-4d] %-15s | %s\n", currentRoot.patientID, currentRoot.name, currentRoot.medicalCondition));
+            inOrderRec(currentRoot.right, sb);
+        }
+    }
+}
