@@ -110,3 +110,26 @@ class PatientBST {
         while (currentRoot.left != null) currentRoot = currentRoot.left;
         return currentRoot;
     }
+
+class QueueNode {
+    Patient patient; QueueNode next;
+    public QueueNode(Patient p) { this.patient = p; this.next = null; }
+}
+
+class EmergencyQueue {
+    QueueNode front, rear;
+    
+    public void enqueue(Patient p) {
+        QueueNode newNode = new QueueNode(p);
+        if (rear == null) { front = rear = newNode; return; }
+        rear.next = newNode; rear = newNode;
+    }
+    
+    public Patient dequeue() {
+        if (front == null) return null; 
+        Patient p = front.patient;
+        front = front.next;
+        if (front == null) rear = null;
+        return p;
+    }
+}
