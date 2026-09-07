@@ -133,3 +133,28 @@ class EmergencyQueue {
         return p;
     }
 }
+
+class StackNode {
+    String treatmentRecord; StackNode next;
+    public StackNode(String record) { this.treatmentRecord = record; this.next = null; }
+}
+
+class TreatmentStack {
+    StackNode top;
+    
+    public void push(String record) {
+        StackNode newNode = new StackNode(record);
+        newNode.next = top; top = newNode;
+    }
+    
+    public String getStackDisplay() {
+        if (top == null) return " No treatments completed yet.\n";
+        StringBuilder sb = new StringBuilder();
+        StackNode temp = top;
+        while (temp != null) {
+            sb.append(" ✓ ").append(temp.treatmentRecord).append("\n");
+            temp = temp.next;
+        }
+        return sb.toString();
+    }
+}
