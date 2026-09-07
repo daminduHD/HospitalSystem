@@ -73,3 +73,40 @@ class PatientBST {
         }
     }
 }
+
+    public Patient search(int id) { return searchRec(root, id); }
+    
+    private Patient searchRec(Patient currentRoot, int id) {
+        if (currentRoot == null || currentRoot.patientID == id) return currentRoot;
+        if (currentRoot.patientID > id) return searchRec(currentRoot.left, id);
+        return searchRec(currentRoot.right, id);
+    }
+
+    public void delete(int id) { root = deleteRec(root, id); }
+
+    private Patient deleteRec(Patient currentRoot, int id) {
+        if (currentRoot == null) return currentRoot;
+        if (id < currentRoot.patientID) {
+            currentRoot.left = deleteRec(currentRoot.left, id);
+        } else if (id > currentRoot.patientID) {
+            currentRoot.right = deleteRec(currentRoot.right, id);
+        } else {
+            if (currentRoot.left == null) return currentRoot.right;
+            else if (currentRoot.right == null) return currentRoot.left;
+
+            Patient successor = getMinNode(currentRoot.right);
+            currentRoot.patientID = successor.patientID;
+            currentRoot.name = successor.name;
+            currentRoot.age = successor.age;
+            currentRoot.contactNumber = successor.contactNumber;
+            currentRoot.medicalCondition = successor.medicalCondition;
+            currentRoot.history = successor.history;
+            currentRoot.right = deleteRec(currentRoot.right, successor.patientID);
+        }
+        return currentRoot;
+    }
+
+    private Patient getMinNode(Patient currentRoot) {
+        while (currentRoot.left != null) currentRoot = currentRoot.left;
+        return currentRoot;
+    }
